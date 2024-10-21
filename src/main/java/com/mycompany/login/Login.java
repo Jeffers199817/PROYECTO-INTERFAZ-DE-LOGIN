@@ -4,6 +4,8 @@
 
 package com.mycompany.login;
 
+import com.mycompany.login.igu.LoginPrincipal;
+
 /**
  *
  * @author JEFFERSON ALQUINGA
@@ -11,6 +13,10 @@ package com.mycompany.login;
 public class Login {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        
+        LoginPrincipal login = new LoginPrincipal();
+        login.setVisible(true);
+        login.setLocationRelativeTo(null);
+       
     }
 }
