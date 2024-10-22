@@ -47,6 +47,7 @@ public class ControladorLogica {
                
             }
         return mensaje;
+        System.out.println("Todo bien");
                 
 
     }
@@ -55,7 +56,7 @@ public class ControladorLogica {
 
     public void crearUsuarioAdmin() {
         
-        Usuario usu = new Usuario(1,"jefferson.alquinga1998@gmail.com","Jeffers1998");
+        Usuario usu = new Usuario(1,"jefferson.alquinga1998@gmail.com","Jeffers1997");
         
         controlPersis.crearUsuarioAdmin(usu);
     }
