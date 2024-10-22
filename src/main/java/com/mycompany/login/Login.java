@@ -4,7 +4,9 @@
 
 package com.mycompany.login;
 
-import com.mycompany.login.igu.LoginPrincipal;
+import com.mycompany.login.igu.Principal;
+import com.mycompany.login.logica.ControladorLogica;
+
 
 /**
  *
@@ -13,10 +15,17 @@ import com.mycompany.login.igu.LoginPrincipal;
 public class Login {
 
     public static void main(String[] args) {
+     
         
-        LoginPrincipal login = new LoginPrincipal();
-        login.setVisible(true);
-        login.setLocationRelativeTo(null);
+        Principal logi = new Principal();
+        logi.setVisible(true);
+        logi.setLocationRelativeTo(null);
+        
+        
+        
+        
+    
+        
        
     }
 }

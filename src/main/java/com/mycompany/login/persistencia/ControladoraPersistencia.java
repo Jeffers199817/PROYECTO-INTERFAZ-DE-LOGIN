@@ -1,13 +1,34 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.mycompany.login.persistencia;
 
-/**
- *
- * @author JEFFERSON ALQUINGA
- */
+import com.mycompany.login.logica.Usuario;
+import java.util.List;
+
+
 public class ControladoraPersistencia {
+    
+    UsuarioJpaController usuarioJpa = new UsuarioJpaController();
+
+    public List<Usuario> ValidarLogin() {
+        
+       return usuarioJpa.findUsuarioEntities();
+        
+        
+        
+    }
+
+    public void crearUsuarioAdmin(Usuario usu) {
+        
+        usuarioJpa.create(usu);
+    }
+    
+
+
+
+    
+    
+   
+
+
     
 }

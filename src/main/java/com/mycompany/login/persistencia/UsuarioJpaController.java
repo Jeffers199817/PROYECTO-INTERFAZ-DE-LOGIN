@@ -4,7 +4,7 @@
  */
 package com.mycompany.login.persistencia;
 
-import com.mycompany.login.logica.usuario;
+import com.mycompany.login.logica.Usuario;
 import com.mycompany.login.persistencia.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;
@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -19,10 +20,13 @@ import javax.persistence.criteria.Root;
  *
  * @author JEFFERSON ALQUINGA
  */
-public class usuarioJpaController implements Serializable {
+public class UsuarioJpaController implements Serializable {
 
-    public usuarioJpaController(EntityManagerFactory emf) {
+    public UsuarioJpaController(EntityManagerFactory emf) {
         this.emf = emf;
+    }
+    public UsuarioJpaController(){
+        emf = Persistence.createEntityManagerFactory("loginPU");
     }
     private EntityManagerFactory emf = null;
 
@@ -30,7 +34,7 @@ public class usuarioJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(usuario usuario) {
+    public void create(Usuario usuario) {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -44,7 +48,7 @@ public class usuarioJpaController implements Serializable {
         }
     }
 
-    public void edit(usuario usuario) throws NonexistentEntityException, Exception {
+    public void edit(Usuario usuario) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -55,7 +59,7 @@ public class usuarioJpaController implements Serializable {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
                 int id = usuario.getId();
-                if (findusuario(id) == null) {
+                if (findUsuario(id) == null) {
                     throw new NonexistentEntityException("The usuario with id " + id + " no longer exists.");
                 }
             }
@@ -72,9 +76,9 @@ public class usuarioJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            usuario usuario;
+            Usuario usuario;
             try {
-                usuario = em.getReference(usuario.class, id);
+                usuario = em.getReference(Usuario.class, id);
                 usuario.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The usuario with id " + id + " no longer exists.", enfe);
@@ -88,19 +92,19 @@ public class usuarioJpaController implements Serializable {
         }
     }
 
-    public List<usuario> findusuarioEntities() {
-        return findusuarioEntities(true, -1, -1);
+    public List<Usuario> findUsuarioEntities() {
+        return findUsuarioEntities(true, -1, -1);
     }
 
-    public List<usuario> findusuarioEntities(int maxResults, int firstResult) {
-        return findusuarioEntities(false, maxResults, firstResult);
+    public List<Usuario> findUsuarioEntities(int maxResults, int firstResult) {
+        return findUsuarioEntities(false, maxResults, firstResult);
     }
 
-    private List<usuario> findusuarioEntities(boolean all, int maxResults, int firstResult) {
+    private List<Usuario> findUsuarioEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(usuario.class));
+            cq.select(cq.from(Usuario.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -112,20 +116,20 @@ public class usuarioJpaController implements Serializable {
         }
     }
 
-    public usuario findusuario(int id) {
+    public Usuario findUsuario(int id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(usuario.class, id);
+            return em.find(Usuario.class, id);
         } finally {
             em.close();
         }
     }
 
-    public int getusuarioCount() {
+    public int getUsuarioCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<usuario> rt = cq.from(usuario.class);
+            Root<Usuario> rt = cq.from(Usuario.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
